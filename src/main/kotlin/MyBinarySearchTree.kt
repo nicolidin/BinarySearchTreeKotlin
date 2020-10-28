@@ -1,5 +1,4 @@
 import java.lang.RuntimeException
-import kotlin.math.log
 
 data class Contact(val name: String, val phoneNumber: String , val address: String)
 
@@ -81,7 +80,7 @@ class MyBinarySearchTree<K : Comparable<K>, V> {
         } else null;
 
         when {
-            // assign node successor or null to child of parent node to delete
+            // assign node successor or null (for leaf) to child of parent node to delete
             nodeToDelete === parentOfNodeToDelete?.leftChild -> {
                 parentOfNodeToDelete.leftChild = nodeSuccessor;
             }
