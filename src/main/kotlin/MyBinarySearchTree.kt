@@ -2,12 +2,12 @@ import java.lang.RuntimeException
 
 data class Contact(val name: String, val phoneNumber: String , val address: String)
 
-data class MyNode(val value: Contact, var leftChild: MyNode? = null, var rightChild: MyNode? = null)
+data class Node(val value: Contact, var leftChild: Node? = null, var rightChild: Node? = null)
 
-class MyBinary {
-    private var rootNode: MyNode? = null;
+class MyBinarySearchTree {
+    private var rootNode: Node? = null;
 
-    private tailrec fun insertNode(currentNode: MyNode, newNode: MyNode) {
+    private tailrec fun insertNode(currentNode: Node, newNode: Node) {
         if (newNode.value.phoneNumber < currentNode.value.phoneNumber) {
             if (currentNode.leftChild == null) {
                 currentNode.leftChild = newNode;
@@ -25,24 +25,14 @@ class MyBinary {
         }
     }
 
-    fun addNode(value: Contact) {
-        val newNode =  MyNode(value)
-
-        if (rootNode == null) {
-            this.rootNode = newNode;
-        } else {
-            this.insertNode(this.rootNode!!, newNode)
-        }
-    }
-
-    private tailrec fun findMinNode(currentNode: MyNode): MyNode {
+    private tailrec fun findMinNode(currentNode: Node): Node {
         if (currentNode.leftChild == null) {
             return currentNode;
         }
         return this.findMinNode(currentNode.leftChild!!);
     }
 
-    private tailrec fun findParentNodeByChildKey(currentNode: MyNode, key: String) : MyNode? {
+    private tailrec fun findParentNodeByChildKey(currentNode: Node, key: String) : Node? {
         if (currentNode.leftChild?.value?.phoneNumber == key || currentNode.rightChild?.value?.phoneNumber == key) {
             return currentNode
         }
@@ -59,7 +49,7 @@ class MyBinary {
         }
     }
 
-    private tailrec fun findNodeByKey(currentNode: MyNode, key: String): MyNode? {
+    private tailrec fun findNodeByKey(currentNode: Node, key: String): Node? {
         return when {
             key < currentNode.value.phoneNumber -> {
                 currentNode.leftChild ?: return null
@@ -77,7 +67,7 @@ class MyBinary {
         val nodeToDelete = this.findNodeByKey(this.rootNode!!, key) ?: throw RuntimeException("can't delete non existing node");
         val parentOfNodeToDelete = this.findParentNodeByChildKey(this.rootNode!!, key);
 
-        val nodeSuccessor : MyNode? = when {
+        val nodeSuccessor : Node? = when {
             nodeToDelete.rightChild != null -> {
                 this.findMinNode(nodeToDelete.rightChild!!)
             }
@@ -109,15 +99,25 @@ class MyBinary {
     }
 
 
-    fun searchNode(key: String): MyNode? {
+    fun searchNode(key: String): Node? {
         this.rootNode ?: throw RuntimeException("can't find node for an empty tree");
 
         return this.findNodeByKey(this.rootNode!!, key)
     }
+
+    fun addNode(value: Contact) {
+        val newNode =  Node(value)
+
+        if (rootNode == null) {
+            this.rootNode = newNode;
+        } else {
+            this.insertNode(this.rootNode!!, newNode)
+        }
+    }
 }
 
 fun main() {
-    val myBinary = MyBinary()
+    val myBinary = MyBinarySearchTree()
 
     myBinary.addNode(Contact("nico", "8", "24 allée gabriel peri"))
     myBinary.addNode(Contact("nico", "3", "24 allée gabriel peri"))
