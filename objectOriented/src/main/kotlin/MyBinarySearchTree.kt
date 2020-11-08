@@ -5,7 +5,7 @@ data class Contact(val name: String, val phoneNumber: String , val address: Stri
 data class Node<K: Comparable<K>, V>(val content: Pair<K, V>, var leftChild: Node<K, V>? = null, var rightChild: Node<K, V>? = null)
 
 class MyBinarySearchTree<K : Comparable<K>, V> {
-    private var rootNode: Node<K, V>? = null;
+    var rootNode: Node<K, V>? = null;
 
     private tailrec fun insertNode(currentNode: Node<K, V>, newNode: Node<K, V>) {
         if (newNode.content.first < currentNode.content.first) {
@@ -131,7 +131,8 @@ fun main() {
     myBinaryWithKeyPhone.addNode(Pair("+353 1 139 9876", Contact("clément", "+353 1 139 9876", "176 allée gabriel peri")))
     myBinaryWithKeyPhone.addNode(Pair("+353 1 258 9799", Contact("stéphane", "+353 1 258 9799", "211 allée gabriel peri")))
     myBinaryWithKeyPhone.addNode(Pair("+353 1 258 0099", Contact("hugo", "+353 1 258 0099", "1 allée gabriel peri")))
-
+    myBinaryWithKeyPhone.deleteNode("+353 1 258 0099")
+    println(myBinaryWithKeyPhone.searchNode("+353 1 666 9354"))
     val myBinaryWithKeyName = MyBinarySearchTree<String, Contact>()
 
     myBinaryWithKeyName.addNode(Pair("nico", Contact("nico", "+353 1 666 9354", "24 allée gabriel peri")))
@@ -143,6 +144,7 @@ fun main() {
     myBinaryWithKeyName.addNode(Pair("stéphane", Contact("stéphane", "+353 1 258 9799", "211 allée gabriel peri")))
     myBinaryWithKeyName.addNode(Pair("hugo", Contact("hugo", "+353 1 258 0099", "1 allée gabriel peri")))
     myBinaryWithKeyName.addNode(Pair("paulo", Contact("paulo", "+353 1 111 0099", "2 allée gabriel peri")))
+    println(myBinaryWithKeyName.searchNode("nico"))
 }
 
 
