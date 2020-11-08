@@ -1,4 +1,4 @@
-import java.lang.RuntimeException
+import kotlin.system.exitProcess
 
 //Data class in kotlin is the equivalent of a structure. A data class can't have methods.
 data class Contact(val name: String, val phoneNumber: String , val address: String)
@@ -21,7 +21,7 @@ tailrec fun insertNode(currentNode: Node, newNode: Node) {
             insertNode(currentNode.rightChild!!, newNode)
         }
     } else {
-        throw RuntimeException("can't add existing number")
+        exitProcess(84)
     }
 }
 
@@ -37,11 +37,11 @@ tailrec fun findParentNodeByChildKey(currentNode: Node, key: String) : Node? {
         return currentNode
     }
     if (key < currentNode.content.first) {
-        currentNode.leftChild ?: throw RuntimeException("no parent found")
+        currentNode.leftChild ?: exitProcess(84)
         return findParentNodeByChildKey(currentNode.leftChild!!, key)
     }
     else if (key > currentNode.content.first) {
-        currentNode.rightChild ?: throw RuntimeException("no parent found")
+        currentNode.rightChild ?: exitProcess(84)
         return findParentNodeByChildKey(currentNode.rightChild!!, key)
     }
     else { return null }  // root node
@@ -49,19 +49,19 @@ tailrec fun findParentNodeByChildKey(currentNode: Node, key: String) : Node? {
 }
 
 tailrec fun findNodeByKey(currentNode: Node, key: String): Node? {
-        if (key < currentNode.content.first) {
-            currentNode.leftChild ?: return null
-            return findNodeByKey(currentNode.leftChild!!, key)
-        }
-        if (key > currentNode.content.first) {
-            currentNode.rightChild ?: return null
-            return findNodeByKey(currentNode.rightChild!!, key)
-        }
-        else { return currentNode }
+    if (key < currentNode.content.first) {
+        currentNode.leftChild ?: return null
+        return findNodeByKey(currentNode.leftChild!!, key)
+    }
+    if (key > currentNode.content.first) {
+        currentNode.rightChild ?: return null
+        return findNodeByKey(currentNode.rightChild!!, key)
+    }
+    else { return currentNode }
 }
 
 fun deleteNode(key: String, tree: MyBinarySearchTree) {
-    val nodeToDelete = findNodeByKey(tree.rootNode!!, key) ?: throw RuntimeException("can't delete non existing node");
+    val nodeToDelete = findNodeByKey(tree.rootNode!!, key) ?: exitProcess(84)
     val parentOfNodeToDelete = findParentNodeByChildKey(tree.rootNode!!, key);
     val nodeSuccessor : Node?;
 
@@ -89,7 +89,7 @@ fun deleteNode(key: String, tree: MyBinarySearchTree) {
     }
 
     //assign delete side on nodeSuccessor
-    nodeSuccessor?.leftChild = nodeToDelete.leftChild;
+    if (nodeSuccessor != nodeToDelete.leftChild) { nodeSuccessor?.leftChild = nodeToDelete.leftChild }
     if (nodeSuccessor != nodeToDelete.rightChild) { nodeSuccessor?.rightChild = nodeToDelete.rightChild } // assign nodeSuccessor.rightChild only if findMinNode got a left leaf node else if it's the same.
 
     // remove successor from it's parent
@@ -101,7 +101,7 @@ fun deleteNode(key: String, tree: MyBinarySearchTree) {
 }
 
 fun searchNode(key: String, tree: MyBinarySearchTree): Node? {
-    tree.rootNode ?: throw RuntimeException("can't find node for an empty tree");
+    tree.rootNode ?: exitProcess(84)
 
     return findNodeByKey(tree.rootNode!!, key)
 }
@@ -116,7 +116,6 @@ fun addNode(content: Pair<String, Contact>,  tree: MyBinarySearchTree) {
     }
 }
 
-// TODO may searchNode return COntact ?
 fun main() {
     val myBinaryWithKeyPhone = MyBinarySearchTree()
 
@@ -128,8 +127,8 @@ fun main() {
     addNode(Pair("+353 1 139 9876", Contact("clément", "+353 1 139 9876", "176 allée gabriel peri")), myBinaryWithKeyPhone)
     addNode(Pair("+353 1 258 9799", Contact("stéphane", "+353 1 258 9799", "211 allée gabriel peri")), myBinaryWithKeyPhone)
     addNode(Pair("+353 1 258 0099", Contact("hugo", "+353 1 258 0099", "1 allée gabriel peri")), myBinaryWithKeyPhone)
-    deleteNode("+353 1 258 0099", myBinaryWithKeyPhone)
-    println(searchNode("+353 1 666 9354", myBinaryWithKeyPhone))
+    deleteNode("+353 1 666 9354", myBinaryWithKeyPhone)
+    println(searchNode("+353 1 256 9720", myBinaryWithKeyPhone))
     val myBinaryWithKeyName = MyBinarySearchTree()
 
     addNode(Pair("nico", Contact("nico", "+353 1 666 9354", "24 allée gabriel peri")), myBinaryWithKeyName)
