@@ -118,7 +118,6 @@ fun addNode(content: Pair<String, Contact>,  tree: MyBinarySearchTree) {
 
 fun main() {
     val myBinaryWithKeyPhone = MyBinarySearchTree()
-
     addNode(Pair("+353 1 666 9354", Contact("nico", "+353 1 666 9354", "24 allée gabriel peri")), myBinaryWithKeyPhone)
     addNode(Pair("+353 1 256 9720", Contact("jean", "+353 1 256 9720", "11 allée gabriel peri")), myBinaryWithKeyPhone)
     addNode(Pair("+353 1 256 9876", Contact("thibault", "+353 1 256 9876", "12 allée gabriel peri")), myBinaryWithKeyPhone)
@@ -129,8 +128,9 @@ fun main() {
     addNode(Pair("+353 1 258 0099", Contact("hugo", "+353 1 258 0099", "1 allée gabriel peri")), myBinaryWithKeyPhone)
     deleteNode("+353 1 666 9354", myBinaryWithKeyPhone)
     println(searchNode("+353 1 256 9720", myBinaryWithKeyPhone))
-    val myBinaryWithKeyName = MyBinarySearchTree()
 
+
+    val myBinaryWithKeyName = MyBinarySearchTree()
     addNode(Pair("nico", Contact("nico", "+353 1 666 9354", "24 allée gabriel peri")), myBinaryWithKeyName)
     addNode(Pair("jean", Contact("jean", "+353 1 256 9720", "11 allée gabriel peri")), myBinaryWithKeyName)
     addNode(Pair("thibault", Contact("thibault", "+353 1 256 9876", "12 allée gabriel peri")), myBinaryWithKeyName)
@@ -140,6 +140,6 @@ fun main() {
     addNode(Pair("stéphane", Contact("stéphane", "+353 1 258 9799", "211 allée gabriel peri")), myBinaryWithKeyName)
     addNode(Pair("hugo", Contact("hugo", "+353 1 258 0099", "1 allée gabriel peri")), myBinaryWithKeyName)
     addNode(Pair("paulo", Contact("paulo", "+353 1 111 0099", "2 allée gabriel peri")), myBinaryWithKeyName)
-
-    println(myBinaryWithKeyName)
+    deleteNode("nico", myBinaryWithKeyName)
+    println(searchNode("jean", myBinaryWithKeyName))
 }
