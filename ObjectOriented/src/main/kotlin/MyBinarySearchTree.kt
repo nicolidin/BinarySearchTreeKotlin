@@ -87,11 +87,13 @@ class MyBinarySearchTree<K : Comparable<K>, V> {
             nodeToDelete === parentOfNodeToDelete?.rightChild -> {
                 parentOfNodeToDelete.rightChild = nodeSuccessor;
             }
-            nodeToDelete === this.rootNode -> { this.rootNode = nodeSuccessor }
+            nodeToDelete === this.rootNode -> {
+                this.rootNode = nodeSuccessor
+            }
         }
 
         //assign delete side on nodeSuccessor
-        nodeSuccessor?.leftChild = nodeToDelete.leftChild;
+        if (nodeSuccessor != nodeToDelete.leftChild) { nodeSuccessor?.leftChild = nodeToDelete.leftChild }
         if (nodeSuccessor != nodeToDelete.rightChild) { nodeSuccessor?.rightChild = nodeToDelete.rightChild } // assign nodeSuccessor.rightChild only if findMinNode got a left leaf node else if it's the same.
 
         // remove successor from it's parent
@@ -131,20 +133,23 @@ fun main() {
     myBinaryWithKeyPhone.addNode(Pair("+353 1 139 9876", Contact("clément", "+353 1 139 9876", "176 allée gabriel peri")))
     myBinaryWithKeyPhone.addNode(Pair("+353 1 258 9799", Contact("stéphane", "+353 1 258 9799", "211 allée gabriel peri")))
     myBinaryWithKeyPhone.addNode(Pair("+353 1 258 0099", Contact("hugo", "+353 1 258 0099", "1 allée gabriel peri")))
-    myBinaryWithKeyPhone.deleteNode("+353 1 258 0099")
-    println(myBinaryWithKeyPhone.searchNode("+353 1 666 9354"))
+    myBinaryWithKeyPhone.deleteNode("+353 1 256 9720")
+    println(myBinaryWithKeyPhone.rootNode)
     val myBinaryWithKeyName = MyBinarySearchTree<String, Contact>()
 
-    myBinaryWithKeyName.addNode(Pair("nico", Contact("nico", "+353 1 666 9354", "24 allée gabriel peri")))
+    myBinaryWithKeyName.addNode(Pair("stéphane", Contact("stéphane", "+353 1 258 9799", "211 allée gabriel peri")))
     myBinaryWithKeyName.addNode(Pair("jean", Contact("jean", "+353 1 256 9720", "11 allée gabriel peri")))
     myBinaryWithKeyName.addNode(Pair("thibault", Contact("thibault", "+353 1 256 9876", "12 allée gabriel peri")))
+    myBinaryWithKeyName.addNode(Pair("nico", Contact("nico", "+353 1 666 9354", "24 allée gabriel peri")))
     myBinaryWithKeyName.addNode(Pair("adrien", Contact("adrien", "+353 1 256 2968", "25 allée gabriel peri")))
     myBinaryWithKeyName.addNode(Pair("laurianne", Contact("laurianne", "+353 1 121 2968", "122 allée gabriel peri")))
     myBinaryWithKeyName.addNode(Pair("clément", Contact("clément", "+353 1 139 9876", "176 allée gabriel peri")))
-    myBinaryWithKeyName.addNode(Pair("stéphane", Contact("stéphane", "+353 1 258 9799", "211 allée gabriel peri")))
     myBinaryWithKeyName.addNode(Pair("hugo", Contact("hugo", "+353 1 258 0099", "1 allée gabriel peri")))
-    myBinaryWithKeyName.addNode(Pair("paulo", Contact("paulo", "+353 1 111 0099", "2 allée gabriel peri")))
-    println(myBinaryWithKeyName.searchNode("nico"))
+    myBinaryWithKeyName.deleteNode("stéphane")
+
+    println(myBinaryWithKeyName.rootNode)
+
+
 }
 
 
