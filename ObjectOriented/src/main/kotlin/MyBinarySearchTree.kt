@@ -1,6 +1,6 @@
 import java.lang.RuntimeException
 
-data class Contact(val name: String, val phoneNumber: String , val address: String)
+data class Contact<K: Comparable<K>>(val name: String, val phoneNumber: K , val address: String)
 
 data class Node<K: Comparable<K>, V>(val content: Pair<K, V>, var leftChild: Node<K, V>? = null, var rightChild: Node<K, V>? = null)
 
@@ -122,8 +122,10 @@ class MyBinarySearchTree<K : Comparable<K>, V> {
     }
 }
 
+/* It's possible to instanciate a binary Tree with a key that implement the interface comparable.
+ We use here the type string but we could have used Int, Long or all other type that implement Comparable  */
 fun main() {
-    val myBinaryWithKeyPhone = MyBinarySearchTree<String, Contact>()
+    val myBinaryWithKeyPhone = MyBinarySearchTree<String, Contact<String>>()
 
     myBinaryWithKeyPhone.addNode(Pair("+353 1 666 9354", Contact("nico", "+353 1 666 9354", "24 allée gabriel peri")))
     myBinaryWithKeyPhone.addNode(Pair("+353 1 256 9720", Contact("jean", "+353 1 256 9720", "11 allée gabriel peri")))
@@ -134,8 +136,9 @@ fun main() {
     myBinaryWithKeyPhone.addNode(Pair("+353 1 258 9799", Contact("stéphane", "+353 1 258 9799", "211 allée gabriel peri")))
     myBinaryWithKeyPhone.addNode(Pair("+353 1 258 0099", Contact("hugo", "+353 1 258 0099", "1 allée gabriel peri")))
     myBinaryWithKeyPhone.deleteNode("+353 1 256 9720")
-    println(myBinaryWithKeyPhone.rootNode)
-    val myBinaryWithKeyName = MyBinarySearchTree<String, Contact>()
+    println(myBinaryWithKeyPhone.searchNode("+353 1 666 9354"))
+
+    val myBinaryWithKeyName = MyBinarySearchTree<String, Contact<String>>()
 
     myBinaryWithKeyName.addNode(Pair("stéphane", Contact("stéphane", "+353 1 258 9799", "211 allée gabriel peri")))
     myBinaryWithKeyName.addNode(Pair("jean", Contact("jean", "+353 1 256 9720", "11 allée gabriel peri")))
@@ -146,6 +149,7 @@ fun main() {
     myBinaryWithKeyName.addNode(Pair("clément", Contact("clément", "+353 1 139 9876", "176 allée gabriel peri")))
     myBinaryWithKeyName.addNode(Pair("hugo", Contact("hugo", "+353 1 258 0099", "1 allée gabriel peri")))
     myBinaryWithKeyName.deleteNode("stéphane")
+    println(myBinaryWithKeyName.searchNode("jean"))
 
     println(myBinaryWithKeyName.rootNode)
 
